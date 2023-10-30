@@ -245,14 +245,14 @@ class MapViewDirections extends Component {
 		}
 
 		if (directionsServiceBaseUrl === BASE_URL_GOONG) {
-			url += `?api_key=${apikey}&origin=${origin}&destination=${destination}`;
+			url += `?origin=${origin}&destination=${destination}&&vehicle=car&api_key=${apikey}`;
 		}
 
 		return fetch(url)
 			.then(response => response.json())
 			.then(json => {
 
-				if (json.status !== 'OK') {
+				if (json.status !== 'OK' && directionsServiceBaseUrl === BASE_URL_GOOGLE) {
 					const errorMessage = json.error_message || json.status || 'Unknown error';
 					return Promise.reject(errorMessage);
 				}
